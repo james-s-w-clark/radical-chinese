@@ -18,7 +18,7 @@
       audioText: '妈',
       toneDesc: '1st Tone (High-Level)',
       toneNum: 1,
-      clue: 'This character sounds like mǎ (from horse 马), but has a gentle 1st high tone (mā). Which meaning radical turns this sound into "Mother"?',
+      clue: 'This character sounds like mǎ (from horse 马), but has a gentle 1st high tone (mā). Which <strong>meaning radical</strong> turns this sound into "Mother"?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '马', hint: "Sounds like 'mǎ'" },
       result: { glyph: '妈', pinyin: 'mā', meaning: 'Mother / Mom' },
@@ -402,13 +402,18 @@
         utterance.voice = zhVoice;
       }
 
-      // Visual tone badge animation while audio is speaking
+      // Visual tone badge and speaker icon animation while audio is speaking
       const toneBadge = document.getElementById('targetTone');
-      if (toneBadge) {
-        toneBadge.classList.add('tone-speaking');
-        utterance.onend = () => toneBadge.classList.remove('tone-speaking');
-        utterance.onerror = () => toneBadge.classList.remove('tone-speaking');
-      }
+      const speakBtn = document.getElementById('speakPinyinBtn');
+      if (speakBtn) speakBtn.classList.add('is-speaking');
+      if (toneBadge) toneBadge.classList.add('tone-speaking');
+
+      const cleanupAudioAnimation = () => {
+        if (speakBtn) speakBtn.classList.remove('is-speaking');
+        if (toneBadge) toneBadge.classList.remove('tone-speaking');
+      };
+      utterance.onend = cleanupAudioAnimation;
+      utterance.onerror = cleanupAudioAnimation;
 
       window.speechSynthesis.speak(utterance);
     } catch {
@@ -552,7 +557,6 @@
       this.targetEnglish = document.getElementById('targetEnglish');
       this.targetPinyin = document.getElementById('targetPinyin');
       this.targetTone = document.getElementById('targetTone');
-      this.speakPinyinSlowBtn = document.getElementById('speakPinyinSlowBtn');
       this.speakPinyinBtn = document.getElementById('speakPinyinBtn');
       this.clueText = document.getElementById('clueText');
 
@@ -605,8 +609,14 @@
     }
 
     bindEvents() {
-      // Theme toggle
-      this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+      // Theme toggle with celestial animation
+      this.themeToggleBtn.addEventListener('click', () => {
+        this.themeToggleBtn.classList.remove('theme-toggling');
+        void this.themeToggleBtn.offsetWidth; // Force reflow to re-trigger spin
+        this.themeToggleBtn.classList.add('theme-toggling');
+        this.toggleTheme();
+        setTimeout(() => this.themeToggleBtn.classList.remove('theme-toggling'), 500);
+      });
 
       // Sound toggle
       this.soundToggleBtn.addEventListener('click', () => {
@@ -614,18 +624,14 @@
         this.updateSoundIcon();
       });
 
-      // Pronounce target word (slow clear tone or normal speed)
-      if (this.speakPinyinSlowBtn) {
-        this.speakPinyinSlowBtn.addEventListener('click', () => {
-          const stage = STAGES[this.currentIndex];
-          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.32);
-        });
-      }
-
+      // Pronounce target word (slow clear tone beside pinyin badge)
       if (this.speakPinyinBtn) {
         this.speakPinyinBtn.addEventListener('click', () => {
           const stage = STAGES[this.currentIndex];
-          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.8);
+          if (stage) {
+            triggerHaptic(10);
+            speakChinese(stage.audioText || stage.result.glyph, 0.32);
+          }
         });
       }
 
@@ -1043,9 +1049,11 @@
       void this.radicalTray.offsetWidth; // Trigger DOM reflow to restart animation
       this.radicalTray.classList.add('tray-nudge');
       triggerHaptic(15);
-      const section = document.getElementById('selectionSection');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Slide down smoothly so both the blueprint equation and the 1-4 choices are visible together
+      const forgeDesk = document.getElementById('forgeDesk');
+      if (forgeDesk) {
+        forgeDesk.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
