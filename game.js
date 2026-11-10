@@ -696,32 +696,56 @@
     }
 
     setupDialogAccessibility() {
+      // Helper for smooth top-layer exit animation across all browsers
+      const closeWithExitAnimation = (dialog) => {
+        if (!dialog.open) return;
+        this.sound.playClick();
+        dialog.setAttribute('data-closing', '');
+        const animations = dialog.getAnimations({ subtree: true });
+        if (animations.length > 0) {
+          Promise.race([
+            Promise.allSettled(animations.map(a => a.finished)),
+            new Promise(r => setTimeout(r, 300))
+          ]).then(() => {
+            dialog.removeAttribute('data-closing');
+            dialog.close();
+          });
+        } else {
+          dialog.removeAttribute('data-closing');
+          dialog.close();
+        }
+      };
+
       // Open glossary modal
       this.glossaryBtn.addEventListener('click', () => {
         this.sound.playClick();
         this.glossaryDialog.showModal();
       });
 
-      // Close glossary modal via close button
-      this.closeGlossaryBtn.addEventListener('click', () => this.glossaryDialog.close());
-      this.dialogGotItBtn.addEventListener('click', () => this.glossaryDialog.close());
+      // Close glossary modal via close button & Got It button
+      this.closeGlossaryBtn.addEventListener('click', () => closeWithExitAnimation(this.glossaryDialog));
+      this.dialogGotItBtn.addEventListener('click', () => closeWithExitAnimation(this.glossaryDialog));
 
-      // Modern Web Guidance: Fallback for browsers without 'closedby' support (Safari etc.)
-      if (!('closedBy' in HTMLDialogElement.prototype)) {
-        this.glossaryDialog.addEventListener('click', (event) => {
-          if (event.target !== this.glossaryDialog) return;
-          const rect = this.glossaryDialog.getBoundingClientRect();
-          const isDialogContent = (
-            rect.top <= event.clientY &&
-            event.clientY <= rect.top + rect.height &&
-            rect.left <= event.clientX &&
-            event.clientX <= rect.left + rect.width
-          );
-          if (!isDialogContent) {
-            this.glossaryDialog.close();
-          }
-        });
-      }
+      // Route native cancel requests (Escape key or light dismiss) through smooth exit animation
+      this.glossaryDialog.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        closeWithExitAnimation(this.glossaryDialog);
+      });
+
+      // Light-dismiss click on backdrop with exit animation
+      this.glossaryDialog.addEventListener('click', (event) => {
+        if (event.target !== this.glossaryDialog) return;
+        const rect = this.glossaryDialog.getBoundingClientRect();
+        const isDialogContent = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+        if (!isDialogContent) {
+          closeWithExitAnimation(this.glossaryDialog);
+        }
+      });
     }
 
     initTheme() {
