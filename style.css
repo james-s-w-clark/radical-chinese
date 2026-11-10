@@ -735,7 +735,7 @@ body {
   justify-content: center;
   position: relative;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-bounce);
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
   user-select: none;
   cursor: pointer;
 }
@@ -764,10 +764,12 @@ body {
   animation: slotPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.slot-placeholder {
+.slot-placeholder,
+.result-placeholder {
   font-size: 2rem;
   color: var(--text-light);
   font-weight: 700;
+  user-select: none;
 }
 
 .slot-content {
@@ -792,16 +794,18 @@ body {
   user-select: none;
 }
 
-/* Result Output Slot */
+/* Result Output Slot (Solid non-flashing background) */
 .result-slot {
   border-style: solid;
   border-color: var(--border-color);
   background-color: var(--bg-slot);
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
 }
 
 .result-slot.result-revealed {
   border-color: var(--color-jade);
-  background: linear-gradient(135deg, rgba(5, 150, 105, 0.08), rgba(217, 119, 6, 0.08));
+  background-color: var(--bg-slot);
+  background-image: linear-gradient(135deg, rgba(5, 150, 105, 0.08), rgba(217, 119, 6, 0.08));
   box-shadow: 0 4px 16px rgba(5, 150, 105, 0.2);
   animation: resultReveal 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1720,19 +1724,12 @@ dialog[data-closing]::backdrop {
   background-color: var(--bg-primary);
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.22s;
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.2s;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: normal !important;
   background-color: var(--bg-primary);
-}
-
-#targetCard {
-  view-transition-name: target-card;
-}
-
-.selection-section {
-  view-transition-name: selection-deck;
 }
 
 @media (prefers-reduced-motion: reduce) {

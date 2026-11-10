@@ -1113,17 +1113,8 @@
       if (this.currentIndex >= STAGES.length) {
         this.showGameOver();
       } else {
-        const update = () => {
-          this.renderStage();
-          // Instant scroll prevents view-transition snapshot desync and white flash on mobile
-          window.scrollTo({ top: 0, behavior: 'instant' });
-        };
-
-        if (document.startViewTransition) {
-          document.startViewTransition(update);
-        } else {
-          update();
-        }
+        this.renderStage();
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
     }
 
