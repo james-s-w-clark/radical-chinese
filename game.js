@@ -383,13 +383,13 @@
     window.speechSynthesis.onvoiceschanged = loadChineseVoices;
   }
 
-  const speakChinese = (text, rate = 0.5) => {
+  const speakChinese = (text, rate = 0.35) => {
     if (!('speechSynthesis' in window)) return;
     try {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'zh-CN';
-      // Rate 0.5 draws out the syllable so rising/dipping/flat pitch contours are obvious
+      // Rate ~0.32-0.35 (70% of previous speed) draws out the syllable so rising/dipping/flat pitch contours are unmistakable
       utterance.rate = rate;
       utterance.pitch = 1.0;
 
@@ -618,7 +618,7 @@
       if (this.speakPinyinSlowBtn) {
         this.speakPinyinSlowBtn.addEventListener('click', () => {
           const stage = STAGES[this.currentIndex];
-          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.45);
+          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.32);
         });
       }
 
@@ -632,7 +632,7 @@
       if (this.spotlightAudioBtn) {
         this.spotlightAudioBtn.addEventListener('click', () => {
           const stage = STAGES[this.currentIndex];
-          if (stage) speakChinese(stage.result.glyph, 0.45);
+          if (stage) speakChinese(stage.result.glyph, 0.32);
         });
       }
 
@@ -875,7 +875,7 @@
           this.resultHint.textContent = `${stage.result.pinyin} · ${stage.result.meaning}`;
 
           // Speak pronunciation slowly so tones are clear
-          speakChinese(stage.result.glyph, 0.5);
+          speakChinese(stage.result.glyph, 0.35);
         }, 220);
 
         // Update score & streak
@@ -955,7 +955,7 @@
             this.resultPlaceholder.classList.add('hidden');
             this.resultHint.textContent = `${stage.result.pinyin} · ${stage.result.meaning}`;
             // Speak pronunciation slowly so tones are clear
-            speakChinese(stage.result.glyph, 0.5);
+            speakChinese(stage.result.glyph, 0.35);
           }, 220);
 
           const points = 150 + (this.streak * 20);
