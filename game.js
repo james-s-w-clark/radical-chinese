@@ -23,10 +23,10 @@
       slot2: { label: 'Sound (声符)', prefilled: '马', hint: "Sounds like 'mǎ'" },
       result: { glyph: '妈', pinyin: 'mā', meaning: 'Mother / Mom' },
       choices: [
-        { id: 'c1', glyph: '女', name: 'Woman / Female', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c2', glyph: '木', name: 'Wood / Tree', subtext: 'Makes 杩 (headboard)', isCorrect: false },
         { id: 'c3', glyph: '氵', name: 'Water / River', subtext: 'Makes 冯 (surge)', isCorrect: false },
-        { id: 'c4', glyph: '口', name: 'Mouth / Question', subtext: 'Makes 吗 (question ma)', isCorrect: false }
+        { id: 'c4', glyph: '口', name: 'Mouth / Question', subtext: 'Makes 吗 (question ma)', isCorrect: false },
+        { id: 'c1', glyph: '女', name: 'Woman / Female', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 }
       ],
       etymology: {
         story: 'Over 80% of Chinese characters work like this! 女 (Woman) provides the female kinship meaning, while 马 (mǎ, horse) gives the phonetic sound "ma" with tone change to mā. Together, they forge 妈 (mā)!',
@@ -47,8 +47,8 @@
       slot2: { label: 'Sound (声符)', prefilled: '羊', hint: "Sounds like 'yáng'" },
       result: { glyph: '洋', pinyin: 'yáng', meaning: 'Ocean / Vast Sea' },
       choices: [
-        { id: 'c1', glyph: '氵', name: 'Three Drops of Water', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c2', glyph: '火', name: 'Fire / Heat', subtext: 'Makes 烊 (melt)', isCorrect: false },
+        { id: 'c1', glyph: '氵', name: 'Three Drops of Water', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c3', glyph: '讠', name: 'Speech / Words', subtext: 'Speech category', isCorrect: false },
         { id: 'c4', glyph: '扌', name: 'Hand / Action', subtext: 'Makes 样 (appearance with 木)', isCorrect: false }
       ],
@@ -95,9 +95,9 @@
       slot2: { label: 'Sound (声符)', prefilled: '丁', hint: "Sounds like 'dīng'" },
       result: { glyph: '打', pinyin: 'dǎ', meaning: 'To Strike / Hit / Play' },
       choices: [
-        { id: 'c1', glyph: '扌', name: 'Hand / Action', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c2', glyph: '目', name: 'Eye / Sight', subtext: 'Vision category', isCorrect: false },
         { id: 'c3', glyph: '心', name: 'Heart / Mind', subtext: 'Emotion category', isCorrect: false },
+        { id: 'c1', glyph: '扌', name: 'Hand / Action', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c4', glyph: '禾', name: 'Grain / Harvest', subtext: 'Agriculture category', isCorrect: false }
       ],
       etymology: {
@@ -119,10 +119,10 @@
       slot2: { label: 'Sound (声符)', prefilled: '包', hint: "Sounds like 'bāo'" },
       result: { glyph: '饱', pinyin: 'bǎo', meaning: 'Full / Satiated' },
       choices: [
-        { id: 'c1', glyph: '饣', name: 'Food / Dining', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c2', glyph: '钅', name: 'Metal / Gold', subtext: 'Metal category', isCorrect: false },
         { id: 'c3', glyph: '纟', name: 'Silk / Thread', subtext: 'Textile category', isCorrect: false },
-        { id: 'c4', glyph: '穴', name: 'Cave / Hole', subtext: 'Shelter category', isCorrect: false }
+        { id: 'c4', glyph: '穴', name: 'Cave / Hole', subtext: 'Shelter category', isCorrect: false },
+        { id: 'c1', glyph: '饣', name: 'Food / Dining', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 }
       ],
       etymology: {
         story: 'The food radical 饣(derived from 食 shí) marks eating and dining. Look at the magic of 包 (bāo): add food 饣-> 饱 (full, bǎo); add hand 扌-> 抱 (embrace, bào); add foot ⻊-> 跑 (run, pǎo); add water 氵-> 泡 (bubble, pào)!',
@@ -143,8 +143,8 @@
       slot2: { label: 'Sound (声符)', prefilled: '青', hint: "Sounds like 'qīng'" },
       result: { glyph: '晴', pinyin: 'qíng', meaning: 'Sunny / Clear Skies' },
       choices: [
-        { id: 'c1', glyph: '日', name: 'Sun / Day', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c2', glyph: '氵', name: 'Water', subtext: 'Makes 清 (qīng, clear water)', isCorrect: false },
+        { id: 'c1', glyph: '日', name: 'Sun / Day', subtext: 'Semantic (意符)', isCorrect: true, slotTarget: 1 },
         { id: 'c3', glyph: '目', name: 'Eye', subtext: 'Makes 睛 (jīng, eyeball)', isCorrect: false },
         { id: 'c4', glyph: '忄', name: 'Heart', subtext: 'Makes 情 (qíng, feeling)', isCorrect: false }
       ],
@@ -167,9 +167,9 @@
       slot2: { label: 'Sound (声符)', prefilled: null, hint: "Find 'hú' sound component" },
       result: { glyph: '湖', pinyin: 'hú', meaning: 'Lake / Inland Waters' },
       choices: [
-        { id: 'c1', glyph: '胡', name: 'Sounds like "hú"', subtext: 'Phonetic (声符)', isCorrect: true, slotTarget: 2 },
         { id: 'c2', glyph: '马', name: 'Sounds like "mǎ"', subtext: 'Phonetic: horse', isCorrect: false },
         { id: 'c3', glyph: '羊', name: 'Sounds like "yáng"', subtext: 'Phonetic: sheep', isCorrect: false },
+        { id: 'c1', glyph: '胡', name: 'Sounds like "hú"', subtext: 'Phonetic (声符)', isCorrect: true, slotTarget: 2 },
         { id: 'c4', glyph: '包', name: 'Sounds like "bāo"', subtext: 'Phonetic: bundle', isCorrect: false }
       ],
       etymology: {
@@ -191,10 +191,10 @@
       slot2: { label: 'Nature (木)', prefilled: null, hint: 'Choose nature element' },
       result: { glyph: '休', pinyin: 'xiū', meaning: 'To Rest / Relax' },
       choices: [
-        { id: 'c1', glyph: '木', name: 'Tree / Wood', subtext: 'Leaning in the shade', isCorrect: true, slotTarget: 2 },
         { id: 'c2', glyph: '火', name: 'Fire / Flame', subtext: 'Heat element', isCorrect: false },
         { id: 'c3', glyph: '金', name: 'Metal / Gold', subtext: 'Metal element', isCorrect: false },
-        { id: 'c4', glyph: '刀', name: 'Knife / Blade', subtext: 'Sharp weapon', isCorrect: false }
+        { id: 'c4', glyph: '刀', name: 'Knife / Blade', subtext: 'Sharp weapon', isCorrect: false },
+        { id: 'c1', glyph: '木', name: 'Tree / Wood', subtext: 'Leaning in the shade', isCorrect: true, slotTarget: 2 }
       ],
       etymology: {
         story: 'A person (亻) resting in the cool shade of a tree (木) = 休 (xiū - to rest)! This is a Compound Ideograph (会意字), where two meaning pictures merge to paint a vivid poetic scene.',
@@ -217,10 +217,10 @@
       dualMode: true,
       validSet: ['日', '月'],
       choices: [
-        { id: 'c1', glyph: '日', name: 'Sun / Day', subtext: 'Light of the Sun', isCorrect: true },
-        { id: 'c2', glyph: '月', name: 'Moon / Night', subtext: 'Light of the Moon', isCorrect: true },
         { id: 'c3', glyph: '山', name: 'Mountain', subtext: 'Earth element', isCorrect: false },
-        { id: 'c4', glyph: '雨', name: 'Rain / Sky', subtext: 'Water element', isCorrect: false }
+        { id: 'c1', glyph: '日', name: 'Sun / Day', subtext: 'Light of the Sun', isCorrect: true },
+        { id: 'c4', glyph: '雨', name: 'Rain / Sky', subtext: 'Water element', isCorrect: false },
+        { id: 'c2', glyph: '月', name: 'Moon / Night', subtext: 'Light of the Moon', isCorrect: true }
       ],
       etymology: {
         story: 'The Sun (日) of the day + the Moon (月) of the night = 明 (míng - Bright / Clarity / Tomorrow)! You have uncovered the secret recipe and beauty of Chinese characters!',
@@ -522,6 +522,7 @@
 
       // Dual slot temporary selection for stage 9
       this.dualPicks = [];
+      this.isReplay = false;
 
       this.cacheDOMElements();
       this.bindEvents();
@@ -819,7 +820,12 @@
         ? 'Choose 2 celestial radicals to forge the character:'
         : 'Choose the matching radical component:';
 
-      this.radicalTray.innerHTML = stage.choices.map((choice, index) => `
+      // Use curated varied positions on first play; shuffle choices on replay
+      const choicesToRender = this.isReplay
+        ? [...stage.choices].sort(() => Math.random() - 0.5)
+        : stage.choices;
+
+      this.radicalTray.innerHTML = choicesToRender.map((choice, index) => `
         <button type="button" class="radical-card" data-id="${choice.id}" aria-label="${choice.name}: ${choice.glyph}">
           <span class="radical-key-num" aria-hidden="true">${index + 1}</span>
           <span class="radical-glyph-big">${choice.glyph}</span>
@@ -1086,6 +1092,7 @@
       this.maxStreak = 0;
       this.firstTrySuccessCount = 0;
       this.forgedHistory = [];
+      this.isReplay = true;
 
       const update = () => {
         this.gameOverScreen.classList.add('hidden');
