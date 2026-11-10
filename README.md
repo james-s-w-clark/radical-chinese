@@ -1,5 +1,9 @@
 # Radical Chinese · 部首魔法
 
+<p align="center">
+  <img src="logo-512.png" width="120" height="120" alt="Radical Chinese Logo" style="border-radius: 26px; box-shadow: 0 8px 24px rgba(220,38,38,0.3);" />
+</p>
+
 > **A playful, interactive game discovering the secret blueprints of Chinese characters.**  
 > Learn how characters combine **semantic meaning radicals** and **phonetic sound components** to forge words!
 

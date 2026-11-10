@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Seal Gradient (Imperial Vermilion Lacquer) -->
+    <linearGradient id="sealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </linearGradient>
+
+    <!-- Golden Magic Sparkle Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- Subtle Inner Seal Texture Shadow -->
+    <filter id="sealShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Seal Body (Traditional Rounded Chop) -->
+  <rect x="32" y="32" width="448" height="448" rx="104" fill="url(#sealGrad)" filter="url(#sealShadow)"/>
+  
+  <!-- Outer Rim Stroke -->
+  <rect x="32" y="32" width="448" height="448" rx="104" fill="none" stroke="#b91c1c" stroke-width="6"/>
+
+  <!-- Golden Inner Filigree Border -->
+  <rect x="62" y="62" width="388" height="388" rx="84" fill="none" stroke="url(#goldGrad)" stroke-width="7" stroke-opacity="0.8"/>
+
+  <!-- Decorative Chinese Cloud / Corner Stamp Knots -->
+  <circle cx="86" cy="86" r="6" fill="#fbbf24" fill-opacity="0.85"/>
+  <circle cx="426" cy="86" r="6" fill="#fbbf24" fill-opacity="0.85"/>
+  <circle cx="86" cy="426" r="6" fill="#fbbf24" fill-opacity="0.85"/>
+  <circle cx="426" cy="426" r="6" fill="#fbbf24" fill-opacity="0.85"/>
+
+  <!-- Central Character '字' (Hanzi / Character) -->
+  <text x="256" y="352" 
+        font-family="'Noto Serif SC', 'PingFang SC', 'Songti SC', 'Source Han Serif SC', serif" 
+        font-size="280" 
+        font-weight="900" 
+        fill="#ffffff" 
+        text-anchor="middle"
+        style="user-select:none;">字</text>
+
+  <!-- Magic Radical Sparkle (Top-Right Accent for 部首魔法) -->
+  <g transform="translate(375, 75)">
+    <!-- 4-Pointed Star -->
+    <path d="M 0 -36 Q 0 0 -36 0 Q 0 0 0 36 Q 0 0 36 0 Q 0 0 0 -36 Z" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="5" fill="#ffffff"/>
+  </g>
+
+  <!-- Secondary Mini Star -->
+  <g transform="translate(115, 385)">
+    <path d="M 0 -18 Q 0 0 -18 0 Q 0 0 0 18 Q 0 0 18 0 Q 0 0 0 -18 Z" fill="url(#goldGrad)" fill-opacity="0.8"/>
+  </g>
+</svg>
