@@ -1090,6 +1090,31 @@ body {
   margin-top: 0.25rem;
 }
 
+/* Lifelong Takeaway Banner */
+.graduation-banner {
+  background-color: var(--color-amber-soft);
+  border: 1px solid color-mix(in srgb, var(--color-amber) 30%, transparent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.graduation-tag {
+  font-size: 0.775rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-amber);
+  margin-bottom: 0.25rem;
+}
+
+.graduation-text {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .forged-gallery-section {
   text-align: left;
   margin-bottom: 2rem;

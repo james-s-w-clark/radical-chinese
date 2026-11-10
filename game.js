@@ -522,7 +522,6 @@
 
       // Dual slot temporary selection for stage 9
       this.dualPicks = [];
-      this.isReplay = false;
 
       this.cacheDOMElements();
       this.bindEvents();
@@ -600,7 +599,7 @@
       this.finalStreak = document.getElementById('finalStreak');
       this.masteryRank = document.getElementById('masteryRank');
       this.galleryGrid = document.getElementById('galleryGrid');
-      this.restartBtn = document.getElementById('restartBtn');
+      this.reviewGlossaryBtn = document.getElementById('reviewGlossaryBtn');
       this.shareScoreBtn = document.getElementById('shareScoreBtn');
       this.shareBtnText = document.getElementById('shareBtnText');
     }
@@ -653,8 +652,13 @@
         }
       });
 
-      // Play again
-      this.restartBtn.addEventListener('click', () => this.restartGame());
+      // Browse Radicals Guide from completion screen
+      if (this.reviewGlossaryBtn) {
+        this.reviewGlossaryBtn.addEventListener('click', () => {
+          this.sound.playClick();
+          this.glossaryDialog.showModal();
+        });
+      }
 
       // Share score
       this.shareScoreBtn.addEventListener('click', () => this.shareResult());
@@ -815,17 +819,12 @@
       // Hide Explanation
       this.explanationCard.classList.add('hidden');
 
-      // Populate Radical Tray Declaratively
+      // Populate Radical Tray Declaratively (Curated Progression)
       this.trayTitle.textContent = stage.dualMode
         ? 'Choose 2 celestial radicals to forge the character:'
         : 'Choose the matching radical component:';
 
-      // Use curated varied positions on first play; shuffle choices on replay
-      const choicesToRender = this.isReplay
-        ? [...stage.choices].sort(() => Math.random() - 0.5)
-        : stage.choices;
-
-      this.radicalTray.innerHTML = choicesToRender.map((choice, index) => `
+      this.radicalTray.innerHTML = stage.choices.map((choice, index) => `
         <button type="button" class="radical-card" data-id="${choice.id}" aria-label="${choice.name}: ${choice.glyph}">
           <span class="radical-key-num" aria-hidden="true">${index + 1}</span>
           <span class="radical-glyph-big">${choice.glyph}</span>
@@ -1082,30 +1081,6 @@
       });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    restartGame() {
-      this.sound.playClick();
-      this.currentIndex = 0;
-      this.score = 0;
-      this.streak = 0;
-      this.maxStreak = 0;
-      this.firstTrySuccessCount = 0;
-      this.forgedHistory = [];
-      this.isReplay = true;
-
-      const update = () => {
-        this.gameOverScreen.classList.add('hidden');
-        this.gameArea.classList.remove('hidden');
-        this.renderStage();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-
-      if (document.startViewTransition) {
-        document.startViewTransition(update);
-      } else {
-        update();
-      }
     }
 
     shareResult() {
