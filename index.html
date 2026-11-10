@@ -112,13 +112,20 @@
             <div class="target-pinyin-wrap">
               <span class="pinyin-label">Sound Target:</span>
               <span class="pinyin-badge" id="targetPinyin">mā</span>
-              <button id="speakPinyinBtn" class="speak-btn" type="button" aria-label="Pronounce target word audio" title="Listen to pronunciation">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                </svg>
-                <span>Hear</span>
-              </button>
+              <span class="tone-badge" id="targetTone">1st Tone · High Flat ¯</span>
+              
+              <div class="audio-controls-group">
+                <button id="speakPinyinSlowBtn" class="speak-btn slow-speak-btn active-speed" type="button" aria-label="Pronounce target word slowly to hear the tone contour" title="Pronounce slowly (0.5x) to clearly hear the tone">
+                  <span>🐢 Slow Tone</span>
+                </button>
+                <button id="speakPinyinBtn" class="speak-btn" type="button" aria-label="Pronounce target word audio at normal speed" title="Pronounce at normal speed">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                  </svg>
+                  <span>Normal</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -205,6 +212,9 @@
             <span class="spotlight-glyph" id="spotlightGlyph">妈</span>
             <span class="spotlight-pinyin" id="spotlightPinyin">mā</span>
             <span class="spotlight-meaning" id="spotlightMeaning">Mother / Mom</span>
+            <button id="spotlightAudioBtn" class="speak-btn spotlight-speak-btn" type="button" aria-label="Replay pronunciation slowly" title="Replay slowly to hear tone">
+              <span>🐢 Replay Tone</span>
+            </button>
           </div>
 
           <div class="etymology-story">

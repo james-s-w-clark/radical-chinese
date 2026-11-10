@@ -16,6 +16,8 @@
       english: 'Mother / Mom',
       pinyin: 'mā',
       audioText: '妈',
+      toneDesc: '1st Tone · High Flat ¯',
+      toneNum: 1,
       clue: 'This character sounds like mǎ (from horse 马), but has a gentle 1st high tone (mā). Which meaning radical turns this sound into "Mother"?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '马', hint: "Sounds like 'mǎ'" },
@@ -38,6 +40,8 @@
       english: 'Ocean / Vast Sea / Foreign',
       pinyin: 'yáng',
       audioText: '洋',
+      toneDesc: '2nd Tone · Rising ↗',
+      toneNum: 2,
       clue: 'Pronunciation is an exact phonetic match for sheep (羊 · yáng)! What meaning radical conveys vast bodies of liquid or the open sea?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '羊', hint: "Sounds like 'yáng'" },
@@ -60,6 +64,8 @@
       english: 'Spoken Language / Words',
       pinyin: 'yǔ',
       audioText: '语',
+      toneDesc: '3rd Tone · Dipping ↘↗',
+      toneNum: 3,
       clue: 'Pronounced with a 3rd dipping tone: yǔ. The sound root 吾 (wú, ancient "I/me") supplies the phonetic rhyme. Which radical marks spoken human communication?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '吾', hint: "Sounds like 'wú'" },
@@ -82,6 +88,8 @@
       english: 'To Strike / Hit / Play',
       pinyin: 'dǎ',
       audioText: '打',
+      toneDesc: '3rd Tone · Dipping ↘↗',
+      toneNum: 3,
       clue: 'Action verb! Sounds like dǎ. On the right is 丁 (dīng), which lent an ancient phonetic sound. Which radical represents physical actions done by hand?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '丁', hint: "Sounds like 'dīng'" },
@@ -104,6 +112,8 @@
       english: 'Full / Satiated after a Meal',
       pinyin: 'bǎo',
       audioText: '饱',
+      toneDesc: '3rd Tone · Dipping ↘↗',
+      toneNum: 3,
       clue: 'Pronounced bǎo, rhyming closely with the bundle radical 包 (bāo). Which radical connects this sensation directly to eating and nourishment?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '包', hint: "Sounds like 'bāo'" },
@@ -126,6 +136,8 @@
       english: 'Sunny / Clear Skies',
       pinyin: 'qíng',
       audioText: '晴',
+      toneDesc: '2nd Tone · Rising ↗',
+      toneNum: 2,
       clue: 'Pronounced qíng. The phonetic root 青 (qīng) gives the rhyming sound. What celestial body comes out to create clear, sunny skies?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '青', hint: "Sounds like 'qīng'" },
@@ -148,6 +160,8 @@
       english: 'Lake / Inland Body of Water',
       pinyin: 'hú',
       audioText: '湖',
+      toneDesc: '2nd Tone · Rising ↗',
+      toneNum: 2,
       clue: 'Target is pronounced hú! The water radical 氵is already locked in place. Which radical component provides the phonetic reading "hú"?',
       slot1: { label: 'Meaning (意符)', prefilled: '氵', hint: 'Water locked in' },
       slot2: { label: 'Sound (声符)', prefilled: null, hint: "Find 'hú' sound component" },
@@ -170,6 +184,8 @@
       english: 'To Rest / Take a Break',
       pinyin: 'xiū',
       audioText: '休',
+      toneDesc: '1st Tone · High Flat ¯',
+      toneNum: 1,
       clue: 'Poetic twist: Not all characters are phonetic! Some are pure visual stories (会意字). When a person (亻) leans against something in nature to rest in the shade, what are they leaning on?',
       slot1: { label: 'Person (人)', prefilled: '亻', hint: 'Standing person' },
       slot2: { label: 'Nature (木)', prefilled: null, hint: 'Choose nature element' },
@@ -192,6 +208,8 @@
       english: 'Bright / Clarity / Tomorrow',
       pinyin: 'míng',
       audioText: '明',
+      toneDesc: '2nd Tone · Rising ↗',
+      toneNum: 2,
       clue: 'Final Master Challenge! Forge this character of pure radiance by selecting the two greatest light-giving celestial bodies in the heavens: Day and Night!',
       slot1: { label: 'Slot 1: Celestial', prefilled: null, hint: 'Select Sun or Moon' },
       slot2: { label: 'Slot 2: Celestial', prefilled: null, hint: 'Select matching partner' },
@@ -352,15 +370,46 @@
   }
 
   // ==========================================================================
-  // Web Speech Pronunciation
+  // Web Speech Pronunciation (Optimized for Clear Mandarin Tones)
   // ==========================================================================
-  const speakChinese = (text) => {
+  let cachedChineseVoices = [];
+  const loadChineseVoices = () => {
+    if (!('speechSynthesis' in window)) return;
+    const voices = window.speechSynthesis.getVoices();
+    cachedChineseVoices = voices.filter(v => v.lang && v.lang.startsWith('zh'));
+  };
+  if ('speechSynthesis' in window) {
+    loadChineseVoices();
+    window.speechSynthesis.onvoiceschanged = loadChineseVoices;
+  }
+
+  const speakChinese = (text, rate = 0.5) => {
     if (!('speechSynthesis' in window)) return;
     try {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'zh-CN';
-      utterance.rate = 0.85; // Slightly slower for clarity
+      // Rate 0.5 draws out the syllable so rising/dipping/flat pitch contours are obvious
+      utterance.rate = rate;
+      utterance.pitch = 1.0;
+
+      if (cachedChineseVoices.length === 0) {
+        loadChineseVoices();
+      }
+      const zhVoice = cachedChineseVoices.find(v => v.lang.replace('_', '-').startsWith('zh-CN'))
+                   || cachedChineseVoices[0];
+      if (zhVoice) {
+        utterance.voice = zhVoice;
+      }
+
+      // Visual tone badge animation while audio is speaking
+      const toneBadge = document.getElementById('targetTone');
+      if (toneBadge) {
+        toneBadge.classList.add('tone-speaking');
+        utterance.onend = () => toneBadge.classList.remove('tone-speaking');
+        utterance.onerror = () => toneBadge.classList.remove('tone-speaking');
+      }
+
       window.speechSynthesis.speak(utterance);
     } catch {
       // Speech synthesis fallback
@@ -493,6 +542,8 @@
       this.categoryBadge = document.getElementById('categoryBadge');
       this.targetEnglish = document.getElementById('targetEnglish');
       this.targetPinyin = document.getElementById('targetPinyin');
+      this.targetTone = document.getElementById('targetTone');
+      this.speakPinyinSlowBtn = document.getElementById('speakPinyinSlowBtn');
       this.speakPinyinBtn = document.getElementById('speakPinyinBtn');
       this.clueText = document.getElementById('clueText');
 
@@ -526,6 +577,7 @@
       this.spotlightGlyph = document.getElementById('spotlightGlyph');
       this.spotlightPinyin = document.getElementById('spotlightPinyin');
       this.spotlightMeaning = document.getElementById('spotlightMeaning');
+      this.spotlightAudioBtn = document.getElementById('spotlightAudioBtn');
       this.storyText = document.getElementById('storyText');
       this.storyTags = document.getElementById('storyTags');
       this.nextBtn = document.getElementById('nextBtn');
@@ -553,11 +605,27 @@
         this.updateSoundIcon();
       });
 
-      // Pronounce target word
-      this.speakPinyinBtn.addEventListener('click', () => {
-        const stage = STAGES[this.currentIndex];
-        if (stage) speakChinese(stage.audioText || stage.result.glyph);
-      });
+      // Pronounce target word (slow clear tone or normal speed)
+      if (this.speakPinyinSlowBtn) {
+        this.speakPinyinSlowBtn.addEventListener('click', () => {
+          const stage = STAGES[this.currentIndex];
+          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.45);
+        });
+      }
+
+      if (this.speakPinyinBtn) {
+        this.speakPinyinBtn.addEventListener('click', () => {
+          const stage = STAGES[this.currentIndex];
+          if (stage) speakChinese(stage.audioText || stage.result.glyph, 0.8);
+        });
+      }
+
+      if (this.spotlightAudioBtn) {
+        this.spotlightAudioBtn.addEventListener('click', () => {
+          const stage = STAGES[this.currentIndex];
+          if (stage) speakChinese(stage.result.glyph, 0.45);
+        });
+      }
 
       // Next button
       this.nextBtn.addEventListener('click', () => this.handleNextStage());
@@ -676,6 +744,10 @@
       this.categoryBadge.textContent = stage.category;
       this.targetEnglish.textContent = stage.english;
       this.targetPinyin.textContent = stage.pinyin;
+      if (this.targetTone) {
+        this.targetTone.textContent = stage.toneDesc;
+        this.targetTone.className = `tone-badge tone-${stage.toneNum}`;
+      }
       this.clueText.innerHTML = stage.clue;
 
       // Update Forge Slots
@@ -784,8 +856,8 @@
           this.resultPlaceholder.classList.add('hidden');
           this.resultHint.textContent = `${stage.result.pinyin} · ${stage.result.meaning}`;
 
-          // Speak pronunciation
-          speakChinese(stage.result.glyph);
+          // Speak pronunciation slowly so tones are clear
+          speakChinese(stage.result.glyph, 0.5);
         }, 220);
 
         // Update score & streak
@@ -862,7 +934,8 @@
             this.resultGlyph.classList.remove('hidden');
             this.resultPlaceholder.classList.add('hidden');
             this.resultHint.textContent = `${stage.result.pinyin} · ${stage.result.meaning}`;
-            speakChinese(stage.result.glyph);
+            // Speak pronunciation slowly so tones are clear
+            speakChinese(stage.result.glyph, 0.5);
           }, 220);
 
           const points = 150 + (this.streak * 20);

@@ -454,11 +454,67 @@ body {
   border: 1px solid rgba(37, 99, 235, 0.2);
 }
 
+/* Tone Contour Badges */
+.tone-badge {
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-slot);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  letter-spacing: 0.02em;
+  transition: all var(--transition-bounce);
+  user-select: none;
+}
+
+.tone-badge.tone-1 {
+  background-color: rgba(220, 38, 38, 0.08);
+  color: var(--color-red);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.tone-badge.tone-2 {
+  background-color: rgba(5, 150, 105, 0.08);
+  color: var(--color-jade);
+  border-color: rgba(5, 150, 105, 0.25);
+}
+
+.tone-badge.tone-3 {
+  background-color: rgba(37, 99, 235, 0.08);
+  color: var(--color-indigo);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+.tone-badge.tone-4 {
+  background-color: rgba(217, 119, 6, 0.08);
+  color: var(--color-amber);
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+.tone-badge.tone-speaking {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
+  border-color: var(--color-red);
+  animation: tonePulse 0.8s infinite ease-in-out;
+}
+
+@keyframes tonePulse {
+  0%, 100% { transform: scale(1.05); }
+  50% { transform: scale(1.12); }
+}
+
+.audio-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .speak-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: var(--radius-full);
   background-color: var(--bg-slot);
   border: 1px solid var(--border-color);
@@ -473,6 +529,25 @@ body {
   background-color: var(--color-indigo-soft);
   color: var(--color-indigo);
   border-color: rgba(37, 99, 235, 0.3);
+}
+
+.slow-speak-btn {
+  background-color: var(--color-amber-soft);
+  border-color: rgba(217, 119, 6, 0.3);
+  color: var(--color-amber);
+  font-weight: 700;
+}
+
+.slow-speak-btn:hover {
+  background-color: rgba(217, 119, 6, 0.2);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.5);
+}
+
+.spotlight-speak-btn {
+  margin-top: 0.5rem;
+  font-size: 0.725rem;
+  padding: 0.2rem 0.55rem;
 }
 
 .target-clue-box {
