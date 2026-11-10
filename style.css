@@ -863,6 +863,12 @@ body {
   font-weight: 500;
 }
 
+@media (pointer: coarse) {
+  .tray-kbd-hint {
+    display: none;
+  }
+}
+
 .radical-tray {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1612,6 +1618,16 @@ dialog[data-closing]::backdrop {
     align-items: flex-start;
     gap: 0.25rem;
     margin-bottom: 0.75rem;
+  }
+
+  .tray-kbd-hint {
+    display: none !important;
+  }
+
+  .tray-title {
+    width: 100%;
+    font-size: 0.85rem;
+    line-height: 1.35;
   }
 
   .radical-tray {

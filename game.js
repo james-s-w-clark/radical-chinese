@@ -42,7 +42,7 @@
       audioText: '洋',
       toneDesc: '2nd Tone · Rising ↗',
       toneNum: 2,
-      clue: 'Pronunciation is an exact phonetic match for sheep (羊 · yáng)! What meaning radical conveys vast bodies of liquid or the open sea?',
+      clue: 'Pronunciation is an exact phonetic match for sheep (羊 · yáng)! What meaning radical conveys <strong>vast bodies of liquid or the open sea</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '羊', hint: "Sounds like 'yáng'" },
       result: { glyph: '洋', pinyin: 'yáng', meaning: 'Ocean / Vast Sea' },
@@ -66,7 +66,7 @@
       audioText: '语',
       toneDesc: '3rd Tone · Dipping ↘↗',
       toneNum: 3,
-      clue: 'Pronounced with a 3rd dipping tone: yǔ. The sound root 吾 (wú, ancient "I/me") supplies the phonetic rhyme. Which radical marks spoken human communication?',
+      clue: 'Pronounced with a 3rd dipping tone: yǔ. The sound root 吾 (wú, ancient "I/me") supplies the phonetic rhyme. Which radical marks <strong>spoken human communication</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '吾', hint: "Sounds like 'wú'" },
       result: { glyph: '语', pinyin: 'yǔ', meaning: 'Spoken Language / Words' },
@@ -90,7 +90,7 @@
       audioText: '打',
       toneDesc: '3rd Tone · Dipping ↘↗',
       toneNum: 3,
-      clue: 'Action verb! Sounds like dǎ. On the right is 丁 (dīng), which lent an ancient phonetic sound. Which radical represents physical actions done by hand?',
+      clue: 'Action verb! Sounds like dǎ. On the right is 丁 (dīng), which lent an ancient phonetic sound. Which radical represents <strong>physical actions done by hand</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '丁', hint: "Sounds like 'dīng'" },
       result: { glyph: '打', pinyin: 'dǎ', meaning: 'To Strike / Hit / Play' },
@@ -114,7 +114,7 @@
       audioText: '饱',
       toneDesc: '3rd Tone · Dipping ↘↗',
       toneNum: 3,
-      clue: 'Pronounced bǎo, rhyming closely with the bundle radical 包 (bāo). Which radical connects this sensation directly to eating and nourishment?',
+      clue: 'Pronounced bǎo, rhyming closely with the bundle radical 包 (bāo). Which radical connects this sensation directly to <strong>eating and nourishment</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '包', hint: "Sounds like 'bāo'" },
       result: { glyph: '饱', pinyin: 'bǎo', meaning: 'Full / Satiated' },
@@ -138,7 +138,7 @@
       audioText: '晴',
       toneDesc: '2nd Tone · Rising ↗',
       toneNum: 2,
-      clue: 'Pronounced qíng. The phonetic root 青 (qīng) gives the rhyming sound. What celestial body comes out to create clear, sunny skies?',
+      clue: 'Pronounced qíng. The phonetic root 青 (qīng) gives the rhyming sound. What celestial body comes out to <strong>create clear, sunny skies</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
       slot2: { label: 'Sound (声符)', prefilled: '青', hint: "Sounds like 'qīng'" },
       result: { glyph: '晴', pinyin: 'qíng', meaning: 'Sunny / Clear Skies' },
@@ -162,7 +162,7 @@
       audioText: '湖',
       toneDesc: '2nd Tone · Rising ↗',
       toneNum: 2,
-      clue: 'Target is pronounced hú! The water radical 氵is already locked in place. Which radical component provides the phonetic reading "hú"?',
+      clue: 'Target is pronounced hú! The water radical 氵is already locked in place. Which radical component provides the <strong>phonetic reading "hú"</strong>?',
       slot1: { label: 'Meaning (意符)', prefilled: '氵', hint: 'Water locked in' },
       slot2: { label: 'Sound (声符)', prefilled: null, hint: "Find 'hú' sound component" },
       result: { glyph: '湖', pinyin: 'hú', meaning: 'Lake / Inland Waters' },
@@ -186,7 +186,7 @@
       audioText: '休',
       toneDesc: '1st Tone (High-Level)',
       toneNum: 1,
-      clue: 'Poetic twist: Not all characters are phonetic! Some are pure visual stories (会意字). When a person (亻) leans against something in nature to rest in the shade, what are they leaning on?',
+      clue: 'Poetic twist: Not all characters are phonetic! Some are pure visual stories (会意字). When a person (亻) leans against <strong>something in nature to rest in the shade</strong>, what are they leaning on?',
       slot1: { label: 'Person (人)', prefilled: '亻', hint: 'Standing person' },
       slot2: { label: 'Nature (木)', prefilled: null, hint: 'Choose nature element' },
       result: { glyph: '休', pinyin: 'xiū', meaning: 'To Rest / Relax' },
@@ -210,7 +210,7 @@
       audioText: '明',
       toneDesc: '2nd Tone · Rising ↗',
       toneNum: 2,
-      clue: 'Final Master Challenge! Forge this character of pure radiance by selecting the two greatest light-giving celestial bodies in the heavens: Day and Night!',
+      clue: 'Final Master Challenge! Forge this character of pure radiance by selecting the <strong>two greatest light-giving celestial bodies</strong> in the heavens: Day and Night!',
       slot1: { label: 'Slot 1: Celestial', prefilled: null, hint: 'Select Sun or Moon' },
       slot2: { label: 'Slot 2: Celestial', prefilled: null, hint: 'Select matching partner' },
       result: { glyph: '明', pinyin: 'míng', meaning: 'Bright / Clarity / Tomorrow' },
@@ -265,27 +265,52 @@
       }
     }
 
+    // Authentic Chinese Temple Block (木鱼 · Mùyú) percussion knock
     playClick() {
       if (!this.enabled) return;
       this.initContext();
       if (!this.audioCtx) return;
 
-      const osc = this.audioCtx.createOscillator();
-      const gain = this.audioCtx.createGain();
       const now = this.audioCtx.currentTime;
 
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(180, now + 0.05);
+      // 1. Primary hollow wooden body resonance (木鱼腔体共鸣)
+      const osc1 = this.audioCtx.createOscillator();
+      const gain1 = this.audioCtx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(820, now);
+      osc1.frequency.exponentialRampToValueAtTime(740, now + 0.07);
+      gain1.gain.setValueAtTime(0.28, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc1.connect(gain1);
+      gain1.connect(this.audioCtx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.085);
 
-      gain.gain.setValueAtTime(0.2, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      // 2. High wood shell overtone (木质壳体泛音)
+      const osc2 = this.audioCtx.createOscillator();
+      const gain2 = this.audioCtx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1480, now);
+      osc2.frequency.exponentialRampToValueAtTime(1360, now + 0.035);
+      gain2.gain.setValueAtTime(0.12, now);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc2.connect(gain2);
+      gain2.connect(this.audioCtx.destination);
+      osc2.start(now);
+      osc2.stop(now + 0.045);
 
-      osc.connect(gain);
-      gain.connect(this.audioCtx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.06);
+      // 3. Mallet strike attack impulse (敲击瞬态)
+      const osc3 = this.audioCtx.createOscillator();
+      const gain3 = this.audioCtx.createGain();
+      osc3.type = 'triangle';
+      osc3.frequency.setValueAtTime(1200, now);
+      osc3.frequency.exponentialRampToValueAtTime(320, now + 0.015);
+      gain3.gain.setValueAtTime(0.22, now);
+      gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
+      osc3.connect(gain3);
+      gain3.connect(this.audioCtx.destination);
+      osc3.start(now);
+      osc3.stop(now + 0.02);
     }
 
     playCorrect() {
