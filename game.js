@@ -596,6 +596,7 @@
       this.slot2 = document.getElementById('slot2');
       this.slot2Badge = document.getElementById('slot2Badge');
       this.slot2Content = document.getElementById('slot2Content');
+      this.slot2Placeholder = document.getElementById('slot2Placeholder');
       this.slot2Hint = document.getElementById('slot2Hint');
 
       this.resultSlot = document.getElementById('resultSlot');
@@ -868,12 +869,14 @@
       if (stage.slot2.prefilled) {
         this.slot2Content.textContent = stage.slot2.prefilled;
         this.slot2Content.classList.remove('hidden');
+        if (this.slot2Placeholder) this.slot2Placeholder.classList.add('hidden');
         this.slot2.classList.add('locked-slot');
         this.slot2.classList.remove('active-target', 'filled-slot');
         this.slot2Hint.textContent = stage.slot2.hint;
       } else {
         this.slot2Content.textContent = '';
         this.slot2Content.classList.add('hidden');
+        if (this.slot2Placeholder) this.slot2Placeholder.classList.remove('hidden');
         this.slot2.classList.remove('locked-slot', 'filled-slot');
         this.slot2Hint.textContent = stage.dualMode ? 'Awaiting radical ⬇' : stage.slot2.hint;
         if (stage.slot1.prefilled) {
@@ -931,6 +934,7 @@
           this.slot1.classList.add('filled-slot');
           this.slot1.classList.remove('active-target');
         } else {
+          if (this.slot2Placeholder) this.slot2Placeholder.classList.add('hidden');
           this.slot2Content.textContent = choice.glyph;
           this.slot2Content.classList.remove('hidden');
           this.slot2.classList.add('filled-slot');
@@ -1007,6 +1011,7 @@
         this.slot1.classList.add('filled-slot');
         this.slot2.classList.add('active-target');
       } else if (this.dualPicks.length === 2) {
+        if (this.slot2Placeholder) this.slot2Placeholder.classList.add('hidden');
         this.slot2Content.textContent = choice.glyph;
         this.slot2Content.classList.remove('hidden');
         this.slot2.classList.add('filled-slot');
@@ -1063,6 +1068,7 @@
             this.slot1.classList.remove('filled-slot');
             this.slot2Content.textContent = '';
             this.slot2Content.classList.add('hidden');
+            if (this.slot2Placeholder) this.slot2Placeholder.classList.remove('hidden');
             this.slot2.classList.remove('filled-slot', 'active-target');
           }, 500);
         }

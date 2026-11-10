@@ -766,9 +766,14 @@ body {
 
 .slot-placeholder,
 .result-placeholder {
-  font-size: 2rem;
+  font-family: var(--font-ui);
+  font-size: clamp(2.35rem, 5vw, 3.25rem);
+  font-weight: 800;
   color: var(--text-light);
-  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   user-select: none;
 }
 
@@ -1662,8 +1667,9 @@ dialog[data-closing]::backdrop {
     max-width: 82px;
   }
 
-  .slot-placeholder {
-    font-size: 1.5rem;
+  .slot-placeholder,
+  .result-placeholder {
+    font-size: 2rem;
   }
 
   .slot-content {
