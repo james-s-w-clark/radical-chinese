@@ -24,15 +24,16 @@
   /* Chinese Classical Color Accents */
   --color-red: #dc2626;
   --color-red-hover: #b91c1c;
-  --color-red-soft: rgba(220, 38, 38, 0.08);
-  --color-red-border: rgba(220, 38, 38, 0.25);
-
   --color-amber: #d97706;
-  --color-amber-soft: rgba(217, 119, 6, 0.1);
   --color-jade: #059669;
-  --color-jade-soft: rgba(5, 150, 105, 0.1);
   --color-indigo: #2563eb;
-  --color-indigo-soft: rgba(37, 99, 235, 0.1);
+
+  /* Modern Dynamic Tints (Computed via color-mix) */
+  --color-red-soft: color-mix(in srgb, var(--color-red) 10%, transparent);
+  --color-red-border: color-mix(in srgb, var(--color-red) 25%, transparent);
+  --color-amber-soft: color-mix(in srgb, var(--color-amber) 12%, transparent);
+  --color-jade-soft: color-mix(in srgb, var(--color-jade) 12%, transparent);
+  --color-indigo-soft: color-mix(in srgb, var(--color-indigo) 12%, transparent);
 
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -76,15 +77,9 @@ html.dark {
 
   --color-red: #ef4444;
   --color-red-hover: #dc2626;
-  --color-red-soft: rgba(239, 68, 68, 0.15);
-  --color-red-border: rgba(239, 68, 68, 0.35);
-
   --color-amber: #f59e0b;
-  --color-amber-soft: rgba(245, 158, 11, 0.15);
   --color-jade: #10b981;
-  --color-jade-soft: rgba(16, 185, 129, 0.15);
   --color-indigo: #3b82f6;
-  --color-indigo-soft: rgba(59, 130, 246, 0.15);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
@@ -219,41 +214,43 @@ body {
   border: 1px solid transparent;
   transition: all var(--transition-fast);
   white-space: nowrap;
-}
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 
-.pill-btn:focus-visible, .icon-btn:focus-visible, .speak-btn:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
+  &:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+  }
 
-.primary-btn {
-  background-color: var(--color-red);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
-}
+  &.primary-btn {
+    background-color: var(--color-red);
+    color: #ffffff;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-red) 25%, transparent);
 
-.primary-btn:hover {
-  background-color: var(--color-red-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
-}
+    &:hover {
+      background-color: var(--color-red-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--color-red) 35%, transparent);
+    }
+  }
 
-.secondary-btn {
-  background-color: var(--bg-card);
-  color: var(--text-secondary);
-  border-color: var(--border-color);
-  box-shadow: var(--shadow-sm);
-}
+  &.secondary-btn {
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-sm);
 
-.secondary-btn:hover {
-  background-color: var(--bg-card-hover);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
+    &:hover {
+      background-color: var(--bg-card-hover);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+  }
 
-.large-btn {
-  padding: 0.75rem 1.75rem;
-  font-size: 1rem;
+  &.large-btn {
+    padding: 0.75rem 1.75rem;
+    font-size: 1rem;
+  }
 }
 
 .btn-kbd {
@@ -780,7 +777,7 @@ body {
   gap: 0.85rem;
 }
 
-/* Individual Radical Choice Card */
+/* Individual Radical Choice Card (Modern CSS Nesting & Touch Optimization) */
 .radical-card {
   background-color: var(--bg-card);
   border: 2px solid var(--border-color);
@@ -796,30 +793,32 @@ body {
   transition: all var(--transition-bounce);
   outline: none;
   user-select: none;
-}
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 
-.radical-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  background-color: var(--bg-card-hover);
-}
+  &:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    background-color: var(--bg-card-hover);
+  }
 
-.radical-card:focus-visible {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px var(--color-red-soft);
-}
+  &:focus-visible {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--color-red-soft);
+  }
 
-.radical-card.selected {
-  border-color: var(--color-red);
-  background-color: var(--color-red-soft);
-}
+  &.selected {
+    border-color: var(--color-red);
+    background-color: var(--color-red-soft);
+  }
 
-.radical-card.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .radical-key-num {
@@ -1417,5 +1416,30 @@ dialog::backdrop {
 
   .glossary-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Same-Document View Transitions & Reduced Motion (Modern Web Standards)
+   ========================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#targetCard {
+  view-transition-name: target-card;
+}
+
+.forge-desk {
+  view-transition-name: forge-desk;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

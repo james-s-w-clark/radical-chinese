@@ -417,6 +417,15 @@
   };
 
   // ==========================================================================
+  // Modern Mobile Haptic Tactile Feedback
+  // ==========================================================================
+  const triggerHaptic = (pattern = 10) => {
+    if ('vibrate' in navigator) {
+      try { navigator.vibrate(pattern); } catch { /* ignore */ }
+    }
+  };
+
+  // ==========================================================================
   // Lightweight Confetti Particle Engine
   // ==========================================================================
   class ConfettiEngine {
@@ -630,6 +639,19 @@
       // Next button
       this.nextBtn.addEventListener('click', () => this.handleNextStage());
 
+      // Modern Event Delegation on Radical Tray with Haptic Touch
+      this.radicalTray.addEventListener('click', (e) => {
+        const card = e.target.closest('.radical-card');
+        if (!card || card.classList.contains('disabled')) return;
+        const stage = STAGES[this.currentIndex];
+        if (!stage) return;
+        const choice = stage.choices.find(c => c.id === card.dataset.id);
+        if (choice) {
+          triggerHaptic(10);
+          this.handleRadicalSelection(choice, card);
+        }
+      });
+
       // Play again
       this.restartBtn.addEventListener('click', () => this.restartGame());
 
@@ -792,29 +814,19 @@
       // Hide Explanation
       this.explanationCard.classList.add('hidden');
 
-      // Populate Radical Tray
+      // Populate Radical Tray Declaratively
       this.trayTitle.textContent = stage.dualMode
         ? 'Choose 2 celestial radicals to forge the character:'
         : 'Choose the matching radical component:';
-      this.radicalTray.innerHTML = '';
 
-      stage.choices.forEach((choice, index) => {
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = 'radical-card';
-        card.dataset.id = choice.id;
-        card.setAttribute('aria-label', `${choice.name}: ${choice.glyph}`);
-
-        card.innerHTML = `
+      this.radicalTray.innerHTML = stage.choices.map((choice, index) => `
+        <button type="button" class="radical-card" data-id="${choice.id}" aria-label="${choice.name}: ${choice.glyph}">
           <span class="radical-key-num" aria-hidden="true">${index + 1}</span>
           <span class="radical-glyph-big">${choice.glyph}</span>
           <span class="radical-name">${choice.name}</span>
           <span class="radical-subtext">${choice.subtext || ''}</span>
-        `;
-
-        card.addEventListener('click', () => this.handleRadicalSelection(choice, card));
-        this.radicalTray.appendChild(card);
-      });
+        </button>
+      `).join('');
     }
 
     handleRadicalSelection(choice, cardElement) {
@@ -832,6 +844,7 @@
 
       if (choice.isCorrect) {
         this.sound.playCorrect();
+        triggerHaptic([15, 35, 20]);
         this.confetti.burst();
 
         // Place into target slot
@@ -894,6 +907,7 @@
       } else {
         // Incorrect attempt
         this.sound.playWrong();
+        triggerHaptic([30, 20, 30]);
         cardElement.classList.add('shake-animation');
         cardElement.classList.add('disabled');
         setTimeout(() => cardElement.classList.remove('shake-animation'), 400);
@@ -926,6 +940,7 @@
 
         if (isSetCorrect) {
           this.sound.playCorrect();
+          triggerHaptic([15, 35, 20]);
           this.confetti.burst();
 
           setTimeout(() => {
@@ -1008,8 +1023,16 @@
       if (this.currentIndex >= STAGES.length) {
         this.showGameOver();
       } else {
-        this.renderStage();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const update = () => {
+          this.renderStage();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        if (document.startViewTransition) {
+          document.startViewTransition(update);
+        } else {
+          update();
+        }
       }
     }
 
@@ -1064,10 +1087,18 @@
       this.firstTrySuccessCount = 0;
       this.forgedHistory = [];
 
-      this.gameOverScreen.classList.add('hidden');
-      this.gameArea.classList.remove('hidden');
-      this.renderStage();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const update = () => {
+        this.gameOverScreen.classList.add('hidden');
+        this.gameArea.classList.remove('hidden');
+        this.renderStage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      if (document.startViewTransition) {
+        document.startViewTransition(update);
+      } else {
+        update();
+      }
     }
 
     shareResult() {
