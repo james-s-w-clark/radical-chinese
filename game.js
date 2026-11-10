@@ -16,7 +16,7 @@
       english: 'Mother / Mom',
       pinyin: 'mā',
       audioText: '妈',
-      toneDesc: '1st Tone · High Flat ¯',
+      toneDesc: '1st Tone (High-Level)',
       toneNum: 1,
       clue: 'This character sounds like mǎ (from horse 马), but has a gentle 1st high tone (mā). Which meaning radical turns this sound into "Mother"?',
       slot1: { label: 'Meaning (意符)', prefilled: null, hint: 'Select radical below' },
@@ -184,7 +184,7 @@
       english: 'To Rest / Take a Break',
       pinyin: 'xiū',
       audioText: '休',
-      toneDesc: '1st Tone · High Flat ¯',
+      toneDesc: '1st Tone (High-Level)',
       toneNum: 1,
       clue: 'Poetic twist: Not all characters are phonetic! Some are pure visual stories (会意字). When a person (亻) leans against something in nature to rest in the shade, what are they leaning on?',
       slot1: { label: 'Person (人)', prefilled: '亻', hint: 'Standing person' },
@@ -639,6 +639,14 @@
       // Next button
       this.nextBtn.addEventListener('click', () => this.handleNextStage());
 
+      // Helpful Blueprint UX Guidance: If user taps an empty slot, nudge the interactive radical tray below
+      const handleSlotTap = (slot) => {
+        if (!slot || slot.classList.contains('locked-slot') || slot.classList.contains('filled-slot')) return;
+        this.nudgeRadicalTray();
+      };
+      if (this.slot1) this.slot1.addEventListener('click', () => handleSlotTap(this.slot1));
+      if (this.slot2) this.slot2.addEventListener('click', () => handleSlotTap(this.slot2));
+
       // Modern Event Delegation on Radical Tray with Haptic Touch
       this.radicalTray.addEventListener('click', (e) => {
         const card = e.target.closest('.radical-card');
@@ -778,33 +786,41 @@
       this.clueText.innerHTML = stage.clue;
 
       // Update Forge Slots
+      if (this.forgeSubLabel) {
+        this.forgeSubLabel.textContent = stage.dualMode
+          ? 'Choose 2 radicals below to slot into the equation:'
+          : 'Tap a radical below to slot into the equation:';
+      }
+
       this.slot1Badge.textContent = stage.slot1.label;
-      this.slot1Hint.textContent = stage.slot1.hint;
       if (stage.slot1.prefilled) {
         this.slot1Content.textContent = stage.slot1.prefilled;
         this.slot1Content.classList.remove('hidden');
         this.slot1Placeholder.classList.add('hidden');
         this.slot1.classList.add('locked-slot');
         this.slot1.classList.remove('active-target', 'filled-slot');
+        this.slot1Hint.textContent = stage.slot1.hint;
       } else {
         this.slot1Content.textContent = '';
         this.slot1Content.classList.add('hidden');
         this.slot1Placeholder.classList.remove('hidden');
         this.slot1.classList.remove('locked-slot', 'filled-slot');
         this.slot1.classList.add('active-target');
+        this.slot1Hint.textContent = 'Awaiting radical ⬇';
       }
 
       this.slot2Badge.textContent = stage.slot2.label;
-      this.slot2Hint.textContent = stage.slot2.hint;
       if (stage.slot2.prefilled) {
         this.slot2Content.textContent = stage.slot2.prefilled;
         this.slot2Content.classList.remove('hidden');
         this.slot2.classList.add('locked-slot');
         this.slot2.classList.remove('active-target', 'filled-slot');
+        this.slot2Hint.textContent = stage.slot2.hint;
       } else {
         this.slot2Content.textContent = '';
         this.slot2Content.classList.add('hidden');
         this.slot2.classList.remove('locked-slot', 'filled-slot');
+        this.slot2Hint.textContent = stage.dualMode ? 'Awaiting radical ⬇' : stage.slot2.hint;
         if (stage.slot1.prefilled) {
           this.slot2.classList.add('active-target');
         }
@@ -1021,6 +1037,18 @@
       this.nextBtn.focus();
     }
 
+    nudgeRadicalTray() {
+      if (!this.radicalTray) return;
+      this.radicalTray.classList.remove('tray-nudge');
+      void this.radicalTray.offsetWidth; // Trigger DOM reflow to restart animation
+      this.radicalTray.classList.add('tray-nudge');
+      triggerHaptic(15);
+      const section = document.getElementById('selectionSection');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
     handleNextStage() {
       this.sound.playClick();
       this.currentIndex++;
@@ -1030,7 +1058,8 @@
       } else {
         const update = () => {
           this.renderStage();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Instant scroll prevents view-transition snapshot desync and white flash on mobile
+          window.scrollTo({ top: 0, behavior: 'instant' });
         };
 
         if (document.startViewTransition) {

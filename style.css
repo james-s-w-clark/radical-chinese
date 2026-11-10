@@ -5,6 +5,9 @@
    ========================================================================== */
 
 :root {
+  /* Enforce native canvas color-scheme so browser view transition never flashes white */
+  color-scheme: light;
+
   /* Paper Palette (Light Mode) */
   --bg-primary: #fbf9f5;
   --bg-card: #ffffff;
@@ -42,8 +45,9 @@
   --shadow-card: 0 2px 10px rgba(40, 20, 10, 0.04);
   --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
 
-  /* Typography Stacks */
+  /* Typography Stacks: Pinyin uses high-quality Latin font for centered precomposed accents */
   --font-ui: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-pinyin: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-hanzi: "Noto Serif SC", "Songti SC", "Source Han Serif SC", SimSun, serif;
   --font-calligraphy: "Ma Shan Zheng", "Noto Serif SC", cursive, serif;
 
@@ -61,6 +65,7 @@
 
 /* Dark Theme (Paper Ink Night) */
 html.dark {
+  color-scheme: dark;
   --bg-primary: #181a1d;
   --bg-card: #22262b;
   --bg-card-hover: #292d33;
@@ -103,6 +108,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
   transition: background-color var(--transition-smooth), color var(--transition-smooth);
 }
 
@@ -110,6 +117,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  max-width: 100%;
   background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
   background-size: 24px 24px;
 }
@@ -117,11 +125,13 @@ body {
 /* App Wrapper */
 .app-container {
   max-width: 860px;
+  width: 100%;
   margin: 0 auto;
   padding: 1.25rem 1.25rem 3rem 1.25rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -134,18 +144,24 @@ body {
   padding: 0.75rem 0 1.25rem 0;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 /* Chinese Seal Stamp Badge */
 .brand-badge {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,22 +184,24 @@ body {
 .brand-titles {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .brand-title {
-  font-size: 1.35rem;
+  font-size: clamp(1.1rem, 4vw, 1.35rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .brand-chinese {
   font-family: var(--font-hanzi);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 3.5vw, 1.15rem);
   color: var(--color-red);
 }
 
@@ -197,6 +215,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 /* Buttons */
@@ -440,9 +459,10 @@ body {
 }
 
 .pinyin-badge {
-  font-family: var(--font-hanzi);
+  font-family: var(--font-pinyin);
   font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--color-indigo);
   background-color: var(--color-indigo-soft);
   padding: 0.15rem 0.65rem;
@@ -569,33 +589,36 @@ body {
 }
 
 /* ==========================================================================
-   Character Forge (Visual Combining Area)
+   Character Blueprint / Forge Equation (Embedded in Workbench)
    ========================================================================== */
-.forge-container {
-  margin-bottom: 1.75rem;
+.challenge-workbench {
+  margin-bottom: 1.5rem;
 }
 
 .forge-desk {
-  background: var(--bg-card);
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-md);
+  background: var(--bg-slot);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--shadow-inner);
   position: relative;
   overflow: hidden;
+  margin-top: 1.25rem;
 }
 
 .forge-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.65rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
 .forge-title-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -603,7 +626,7 @@ body {
 }
 
 .forge-sub-label {
-  font-size: 0.8rem;
+  font-size: 0.775rem;
   color: var(--text-tertiary);
   font-weight: 500;
 }
@@ -613,7 +636,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0;
 }
 
 .slot-wrapper {
@@ -641,22 +664,28 @@ body {
 .forge-slot {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: var(--bg-slot);
+  background-color: var(--bg-card);
   border: 2px dashed var(--border-strong);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: var(--shadow-inner);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-bounce);
   user-select: none;
+  cursor: pointer;
 }
 
 .forge-slot.locked-slot {
   border-style: solid;
   border-color: var(--border-strong);
-  background-color: var(--bg-card);
+  background-color: var(--bg-slot);
+  cursor: default;
+}
+
+.forge-slot.result-slot {
+  cursor: default;
 }
 
 .forge-slot.active-target {
@@ -952,9 +981,10 @@ body {
 }
 
 .spotlight-pinyin {
-  font-family: var(--font-hanzi);
+  font-family: var(--font-pinyin);
   font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--color-indigo);
   margin-top: 0.25rem;
 }
@@ -1386,21 +1416,76 @@ dialog::backdrop {
   display: none !important;
 }
 
+/* Nudge animation when tapping blueprint slots */
+@keyframes trayNudge {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  50% { transform: translateY(2px); }
+  75% { transform: translateY(-2px); }
+}
+
+.tray-nudge {
+  animation: trayNudge 0.35s ease-in-out;
+}
+
 /* ==========================================================================
    Responsive Adaptations
    ========================================================================== */
 @media (max-width: 640px) {
   .app-container {
-    padding: 0.75rem 0.75rem 2rem 0.75rem;
+    padding: 0.65rem 0.65rem 2rem 0.65rem;
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    padding: 0.5rem 0 0.85rem 0;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
   }
 
   .header-left .brand-subtitle {
     display: none;
   }
 
+  .brand-badge {
+    width: 36px;
+    height: 36px;
+  }
+
+  .header-controls {
+    gap: 0.35rem;
+  }
+
+  #glossaryBtn {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .target-card {
+    padding: 1.15rem 0.85rem;
+  }
+
   .target-body {
     grid-template-columns: 1fr;
     gap: 0.85rem;
+  }
+
+  .challenge-workbench .forge-desk {
+    padding: 0.85rem 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .forge-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
   }
 
   .radical-tray {
@@ -1409,15 +1494,24 @@ dialog::backdrop {
   }
 
   .forge-slots-area {
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
 
   .slot-wrapper {
-    max-width: 95px;
+    max-width: 82px;
+  }
+
+  .slot-placeholder {
+    font-size: 1.5rem;
+  }
+
+  .slot-content {
+    font-size: 2.1rem;
   }
 
   .forge-operator {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    padding: 0 0.1rem;
   }
 
   .etymology-breakdown {
@@ -1445,20 +1539,29 @@ dialog::backdrop {
 }
 
 /* ==========================================================================
-   Same-Document View Transitions & Reduced Motion (Modern Web Standards)
+   Same-Document View Transitions & Reduced Motion (Zero White-Flash Canvas)
    ========================================================================== */
+::view-transition {
+  background-color: var(--bg-primary);
+}
+
+::view-transition-group(root) {
+  background-color: var(--bg-primary);
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.22s;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--bg-primary);
 }
 
 #targetCard {
   view-transition-name: target-card;
 }
 
-.forge-desk {
-  view-transition-name: forge-desk;
+.selection-section {
+  view-transition-name: selection-deck;
 }
 
 @media (prefers-reduced-motion: reduce) {

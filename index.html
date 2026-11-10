@@ -51,7 +51,7 @@
             <path d="M6 6h10"/>
             <path d="M6 10h10"/>
           </svg>
-          <span class="btn-text">Radicals Guide</span>
+          <span class="btn-text">Guide</span>
         </button>
 
         <button id="soundToggleBtn" class="icon-btn" type="button" aria-label="Toggle Sound Effects" title="Toggle Sound">
@@ -112,8 +112,8 @@
         </div>
       </section>
 
-      <!-- Target Word Banner -->
-      <section class="target-card" id="targetCard" aria-live="polite">
+      <!-- Challenge Workbench: Target Prompt & Visual Character Blueprint (Read & Observe) -->
+      <section class="target-card challenge-workbench" id="targetCard" aria-live="polite">
         <div class="target-category-badge" id="categoryBadge">Warmup · Phono-Semantic</div>
         
         <div class="target-body">
@@ -123,7 +123,7 @@
             <div class="target-pinyin-wrap">
               <span class="pinyin-label">Sound Target:</span>
               <span class="pinyin-badge" id="targetPinyin">mā</span>
-              <span class="tone-badge" id="targetTone">1st Tone · High Flat ¯</span>
+              <span class="tone-badge tone-1" id="targetTone">1st Tone (High-Level)</span>
               
               <div class="audio-controls-group">
                 <button id="speakPinyinSlowBtn" class="speak-btn slow-speak-btn active-speed" type="button" aria-label="Pronounce target word slowly to hear the tone contour" title="Pronounce extra slowly (0.32x) to clearly hear the tone contour">
@@ -143,29 +143,27 @@
           <div class="target-clue-box">
             <div class="clue-tag">💡 Radical Clue</div>
             <p class="clue-text" id="clueText">
-              This character sounds like <strong>mǎ</strong> (from horse 马), but has a level 1st tone (<strong>mā</strong>). Which meaning radical turns this sound into "Mother"?
+              This character sounds like <strong>mǎ</strong> (from horse 马), but has a gentle 1st high tone (<strong>mā</strong>). Which meaning radical turns this sound into "Mother"?
             </p>
           </div>
         </div>
-      </section>
 
-      <!-- The Character Forge (Visual Combining Workshop) -->
-      <section class="forge-container" aria-label="Character Forge combining workshop">
-        <div class="forge-desk">
+        <!-- Integrated Character Blueprint / Forge Equation -->
+        <div class="forge-desk" id="forgeDesk" aria-label="Character Blueprint equation">
           <div class="forge-header">
-            <span class="forge-title-label">Character Forge · 炼字台</span>
-            <span class="forge-sub-label" id="forgeSubLabel">Slot pieces together to synthesize the character</span>
+            <span class="forge-title-label">Character Blueprint · 炼字台</span>
+            <span class="forge-sub-label" id="forgeSubLabel">Tap a radical in the tray below to slot into the equation:</span>
           </div>
 
           <div class="forge-slots-area">
             <!-- Slot 1: Meaning Radical (or Left Component) -->
             <div class="slot-wrapper">
               <div class="slot-badge" id="slot1Badge">Meaning (意符)</div>
-              <div class="forge-slot" id="slot1" role="region" aria-label="Meaning Radical Slot" tabindex="0">
+              <div class="forge-slot active-target" id="slot1" role="region" aria-label="Meaning Radical Slot" tabindex="0">
                 <span class="slot-placeholder" id="slot1Placeholder">?</span>
                 <span class="slot-content hidden" id="slot1Content"></span>
               </div>
-              <span class="slot-hint" id="slot1Hint">Select below</span>
+              <span class="slot-hint" id="slot1Hint">Awaiting radical ⬇</span>
             </div>
 
             <!-- Math Plus Symbol -->
