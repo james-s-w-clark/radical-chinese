@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radical Chinese · 部首魔法 — Interactive Hanzi Workshop</title>
+  <meta name="description" content="A cute, interactive game teaching the secret building blocks of Chinese characters: semantic meaning radicals and phonetic sound components.">
+  <meta name="theme-color" content="#dc2626">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Radical Chinese · 部首魔法">
+  <meta property="og:description" content="Discover how Chinese characters are built from meaning and sound components in this fun, interactive workshop!">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Elegant Calligraphy & Chinese Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header / Navigation Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-badge" aria-hidden="true">
+          <span class="seal-character">字</span>
+        </div>
+        <div class="brand-titles">
+          <h1 class="brand-title">Radical Chinese <span class="brand-chinese">部首魔法</span></h1>
+          <p class="brand-subtitle">The Secret Recipe of Chinese Characters</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button id="glossaryBtn" class="pill-btn secondary-btn" type="button" aria-haspopup="dialog" title="View Radicals Glossary">
+          <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+          </svg>
+          <span class="btn-text">Radicals Guide</span>
+        </button>
+
+        <button id="soundToggleBtn" class="icon-btn" type="button" aria-label="Toggle Sound Effects" title="Toggle Sound">
+          <svg class="icon sound-on-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+          <svg class="icon sound-off-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        </button>
+
+        <button id="themeToggleBtn" class="icon-btn" type="button" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+          <svg class="icon moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <svg class="icon sun-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/>
+            <path d="M12 20v2"/>
+            <path d="m4.93 4.93 1.41 1.41"/>
+            <path d="m17.66 17.66 1.41 1.41"/>
+            <path d="M2 12h2"/>
+            <path d="M20 12h2"/>
+            <path d="m6.34 17.66-1.41 1.41"/>
+            <path d="m19.07 4.93-1.41 1.41"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Flow -->
+    <main class="main-content" id="gameArea">
+      <!-- Game Top Info Bar: Progress & Score -->
+      <section class="game-meta-bar" aria-label="Game progress and score">
+        <div class="meta-item level-info">
+          <span class="meta-label">Progress</span>
+          <span class="meta-value" id="levelDisplay">Stage 1 of 9</span>
+        </div>
+
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" id="progressFill" style="width: 11%;"></div>
+        </div>
+
+        <div class="meta-group-right">
+          <div class="meta-item score-info">
+            <span class="meta-label">Score</span>
+            <span class="meta-value score-text" id="scoreDisplay">0</span>
+          </div>
+
+          <div class="meta-item streak-info" id="streakBadge">
+            <span class="fire-icon">🔥</span>
+            <span class="streak-text" id="streakDisplay">0 Streak</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Target Word Banner -->
+      <section class="target-card" id="targetCard" aria-live="polite">
+        <div class="target-category-badge" id="categoryBadge">Warmup · Phono-Semantic</div>
+        
+        <div class="target-body">
+          <div class="target-left">
+            <span class="target-instruction">Target Word:</span>
+            <h2 class="target-english" id="targetEnglish">Mother / Mom</h2>
+            <div class="target-pinyin-wrap">
+              <span class="pinyin-label">Sound Target:</span>
+              <span class="pinyin-badge" id="targetPinyin">mā</span>
+              <button id="speakPinyinBtn" class="speak-btn" type="button" aria-label="Pronounce target word audio" title="Listen to pronunciation">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+                <span>Hear</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="target-clue-box">
+            <div class="clue-tag">💡 Radical Clue</div>
+            <p class="clue-text" id="clueText">
+              This character sounds like <strong>mǎ</strong> (from horse 马), but has a level 1st tone (<strong>mā</strong>). Which meaning radical turns this sound into "Mother"?
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Character Forge (Visual Combining Workshop) -->
+      <section class="forge-container" aria-label="Character Forge combining workshop">
+        <div class="forge-desk">
+          <div class="forge-header">
+            <span class="forge-title-label">Character Forge · 炼字台</span>
+            <span class="forge-sub-label" id="forgeSubLabel">Slot pieces together to synthesize the character</span>
+          </div>
+
+          <div class="forge-slots-area">
+            <!-- Slot 1: Meaning Radical (or Left Component) -->
+            <div class="slot-wrapper">
+              <div class="slot-badge" id="slot1Badge">Meaning (意符)</div>
+              <div class="forge-slot" id="slot1" role="region" aria-label="Meaning Radical Slot" tabindex="0">
+                <span class="slot-placeholder" id="slot1Placeholder">?</span>
+                <span class="slot-content hidden" id="slot1Content"></span>
+              </div>
+              <span class="slot-hint" id="slot1Hint">Select below</span>
+            </div>
+
+            <!-- Math Plus Symbol -->
+            <div class="forge-operator" aria-hidden="true">+</div>
+
+            <!-- Slot 2: Phonetic Component (or Right Component) -->
+            <div class="slot-wrapper">
+              <div class="slot-badge" id="slot2Badge">Sound (声符)</div>
+              <div class="forge-slot locked-slot" id="slot2" role="region" aria-label="Phonetic Component Slot">
+                <span class="slot-content" id="slot2Content">马</span>
+              </div>
+              <span class="slot-hint" id="slot2Hint">Sounds like 'mǎ'</span>
+            </div>
+
+            <!-- Math Equals Symbol -->
+            <div class="forge-operator" aria-hidden="true">=</div>
+
+            <!-- Result Slot: The Combined Hanzi -->
+            <div class="slot-wrapper result-wrapper">
+              <div class="slot-badge result-badge">Result (汉字)</div>
+              <div class="forge-slot result-slot" id="resultSlot" aria-live="polite">
+                <span class="result-placeholder" id="resultPlaceholder">?</span>
+                <span class="result-glyph hidden" id="resultGlyph">妈</span>
+              </div>
+              <span class="slot-hint" id="resultHint">Combined Output</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Radical Selection Tray (Options to click) -->
+      <section class="selection-section" aria-label="Radical selection options">
+        <div class="tray-header">
+          <span class="tray-title" id="trayTitle">Choose the matching radical component:</span>
+          <span class="tray-kbd-hint">Keyboard: Press 1, 2, 3, or 4</span>
+        </div>
+
+        <div class="radical-tray" id="radicalTray" role="group" aria-label="Radical choices">
+          <!-- Dynamically generated choice cards go here -->
+        </div>
+      </section>
+
+      <!-- Feedback / Etymology Scroll (Appears upon answering) -->
+      <section class="explanation-card hidden" id="explanationCard" aria-live="polite">
+        <div class="explanation-header">
+          <div class="explanation-status" id="explanationStatus">
+            <span class="status-icon" id="statusIcon">✨</span>
+            <span class="status-title" id="statusTitle">Brilliant Combination!</span>
+          </div>
+          <div class="explanation-points" id="pointsEarned">+100 pts</div>
+        </div>
+
+        <div class="etymology-breakdown">
+          <div class="character-spotlight">
+            <span class="spotlight-glyph" id="spotlightGlyph">妈</span>
+            <span class="spotlight-pinyin" id="spotlightPinyin">mā</span>
+            <span class="spotlight-meaning" id="spotlightMeaning">Mother / Mom</span>
+          </div>
+
+          <div class="etymology-story">
+            <h3 class="story-heading">How this character works:</h3>
+            <p class="story-text" id="storyText">
+              <strong>女 (Woman)</strong> provides the semantic meaning (female family member). 
+              <strong>马 (mǎ, horse)</strong> provides the phonetic pronunciation clue ("ma")! 
+              Together, they forge <strong>妈 (mā)</strong>!
+            </p>
+            <div class="story-tags" id="storyTags">
+              <span class="concept-chip">形声字 Phono-Semantic Compound</span>
+              <span class="radical-chip">部首: 女 (Woman)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="explanation-footer">
+          <button id="nextBtn" class="pill-btn primary-btn large-btn" type="button">
+            <span>Next Challenge</span>
+            <kbd class="btn-kbd">Enter ↵</kbd>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Game Completed Screen (Summary & Review) -->
+    <section class="game-over-screen hidden" id="gameOverScreen" aria-live="polite">
+      <div class="game-over-card">
+        <div class="celebration-seal" aria-hidden="true">
+          <span>大吉</span>
+        </div>
+
+        <h2 class="game-over-title">Master of Radicals!</h2>
+        <p class="game-over-subtitle">You uncovered the secret blueprints of Chinese characters</p>
+
+        <!-- Final Stats -->
+        <div class="final-stats-grid">
+          <div class="final-stat-box">
+            <span class="stat-number" id="finalScore">900</span>
+            <span class="stat-label">Final Score</span>
+          </div>
+          <div class="final-stat-box">
+            <span class="stat-number" id="finalAccuracy">100%</span>
+            <span class="stat-label">First-Try Accuracy</span>
+          </div>
+          <div class="final-stat-box">
+            <span class="stat-number" id="finalStreak">9 🔥</span>
+            <span class="stat-label">Highest Streak</span>
+          </div>
+          <div class="final-stat-box">
+            <span class="stat-number" id="masteryRank">宗师 Grandmaster</span>
+            <span class="stat-label">Honorary Rank</span>
+          </div>
+        </div>
+
+        <!-- Gallery of Forged Characters -->
+        <div class="forged-gallery-section">
+          <h3 class="gallery-title">Your Forged Characters Workshop (9 Characters)</h3>
+          <div class="gallery-grid" id="galleryGrid">
+            <!-- Populated dynamically with each character, pinyin, and formula -->
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="game-over-actions">
+          <button id="restartBtn" class="pill-btn primary-btn large-btn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Play Again</span>
+          </button>
+          
+          <button id="shareScoreBtn" class="pill-btn secondary-btn large-btn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span id="shareBtnText">Share Result</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p class="footer-text">
+          Created with curiosity for Chinese character morphology. Over 80% of Chinese characters are phono-semantic compounds!
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/james-s-w-clark/radical-chinese" target="_blank" rel="noopener noreferrer" class="footer-link">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <span>GitHub Repository</span>
+          </a>
+          <span class="footer-separator" aria-hidden="true">·</span>
+          <a href="https://github.com/danielt998/HanziToAnki/pull/263" target="_blank" rel="noopener noreferrer" class="footer-link">
+            <span>HanziToAnki PR #263</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Radicals Reference Modal Dialog (compliant with modern-web-guidance) -->
+  <dialog id="glossaryDialog" closedby="any" aria-labelledby="glossaryTitle">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-wrap">
+          <span class="dialog-seal" aria-hidden="true">典</span>
+          <h2 id="glossaryTitle" class="dialog-title">Common Radicals Guide · 常用部首</h2>
+        </div>
+        <button id="closeGlossaryBtn" class="close-btn" type="button" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <p class="dialog-intro">
+        Most Chinese characters (over 80%) are <strong>Phono-Semantic Compounds (形声字)</strong>. They combine a <strong>Semantic Radical (形旁)</strong> that gives the meaning category, with a <strong>Phonetic Component (声旁)</strong> that hints at the sound!
+      </p>
+
+      <div class="glossary-grid" id="glossaryList">
+        <!-- Common Radicals Reference Cards -->
+        <article class="radical-info-card">
+          <div class="card-glyph-large">氵</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">shuǐ (三点水)</div>
+            <div class="card-meaning">Water / Liquid / Oceans</div>
+            <div class="card-examples">Examples: 海 (ocean), 江 (river), 洗 (wash), 洋 (vast sea)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">女</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">nǚ (女字旁)</div>
+            <div class="card-meaning">Female / Woman / Kinship</div>
+            <div class="card-examples">Examples: 妈 (mother), 姐 (sister), 妹 (younger sister), 好 (good)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">讠</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">yán (言字旁)</div>
+            <div class="card-meaning">Speech / Words / Language</div>
+            <div class="card-examples">Examples: 说 (speak), 话 (words), 语 (language), 读 (read)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">扌</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">shǒu (提手旁)</div>
+            <div class="card-meaning">Hand / Physical Action</div>
+            <div class="card-examples">Examples: 打 (strike), 提 (lift), 推 (push), 拉 (pull)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">饣</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">shí (食字旁)</div>
+            <div class="card-meaning">Food / Dining / Eating</div>
+            <div class="card-examples">Examples: 饭 (meal), 饱 (full), 饮 (drink), 馆 (restaurant)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">木</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">mù (木字旁)</div>
+            <div class="card-meaning">Wood / Trees / Nature</div>
+            <div class="card-examples">Examples: 林 (woods), 森 (forest), 休 (rest), 桥 (bridge)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">日</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">rì (日字旁)</div>
+            <div class="card-meaning">Sun / Day / Brightness</div>
+            <div class="card-examples">Examples: 晴 (sunny), 明 (bright), 时 (time), 晚 (evening)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">火 / 灬</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">huǒ (火字旁 / 四点底)</div>
+            <div class="card-meaning">Fire / Heat / Cooking</div>
+            <div class="card-examples">Examples: 热 (hot), 烧 (burn), 烤 (roast), 炎 (blazing)</div>
+          </div>
+        </article>
+
+        <article class="radical-info-card">
+          <div class="card-glyph-large">亻</div>
+          <div class="card-details">
+            <div class="card-pinyin-name">rén (单人旁)</div>
+            <div class="card-meaning">Person / Human Behavior</div>
+            <div class="card-examples">Examples: 你 (you), 他 (he), 休 (rest), 们 (plural marker)</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="dialog-footer">
+        <button id="dialogGotItBtn" class="pill-btn primary-btn" type="button">Close Guide</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Canvas for celebration confetti -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <script src="game.js"></script>
+</body>
+</html>
