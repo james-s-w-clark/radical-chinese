@@ -1375,6 +1375,9 @@ dialog[data-closing]::backdrop {
   dialog[open]::backdrop {
     transition-duration: 0.12s;
   }
+  html {
+    scroll-behavior: auto !important;
+  }
 }
 
 .dialog-content {

@@ -1120,7 +1120,8 @@
         this.showGameOver();
       } else {
         this.renderStage();
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: prefersReduced ? 'instant' : 'smooth' });
       }
     }
 
@@ -1163,7 +1164,8 @@
         this.galleryGrid.appendChild(div);
       });
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: prefersReduced ? 'instant' : 'smooth' });
     }
 
     shareResult() {
